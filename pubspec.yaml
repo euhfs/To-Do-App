@@ -1,0 +1,44 @@
+name: todo_app
+description: "A simple todo application."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.8.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_secure_storage: ^9.2.4
+  flutter_native_splash: ^2.2.16
+  flutter_launcher_icons: ^0.14.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+
+flutter_native_splash:
+  color: "#FFFFFF"
+  android_12:
+    color: "#FFFFFF"
+    icon_background_color: "#FFFFFF"
+  ios: true
+  web: true
+
+flutter_icons:
+  android: true
+  ios: true
+  adaptive_icon_background: "#FFFFFF" 
+  image_path: "assets/app_icon.png"  
+  windows:
+    generate: true
+    image_path: "assets/app_icon.png"
+    icon_size: 128  
+  linux:
+    generate: true
+    image_path: "assets/app_icon.png"
+    icon_size: 128

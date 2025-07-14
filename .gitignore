@@ -1,0 +1,70 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.build/
+.buildlog/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
+.env
+.env.*            # ignore all env files
+
+# IntelliJ / Android Studio related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# VS Code settings (optional: uncomment if you want to ignore VS Code configs)
+.vscode/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+build/
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio build artifacts
+/android/app/debug/
+/android/app/profile/
+/android/app/release/
+
+# Android specific
+*.apk
+*.ap_
+local.properties       # SDK path, should not be committed
+*.jks                  # Keystore files
+*.keystore             # Another keystore extension
+
+# iOS specific
+Pods/
+Runner.xcworkspace/
+*.xcuserstate
+*.xcworkspace
+*.xcodeproj/project.xcworkspace/
+DerivedData/
+*.ipa                  # iOS app archive
+
+# Generated files by flutter_launcher_icons or flutter_native_splash 
+/flutter_launcher_icons/
+.flutter_native_splash/
+
+# Others
+*.lock                 # lock files
+*.lock.yaml
+*.lock.json
