@@ -68,3 +68,12 @@ DerivedData/
 *.lock                 # lock files
 *.lock.yaml
 *.lock.json
+
+# Android/Gradle related
+android/key.properties
+android/app/release.jks
+*.jks
+*.keystore
+*.gradle
+.gradle/
+local.properties

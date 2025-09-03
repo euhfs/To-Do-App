@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:todo_app/utils/colors.dart';
 import 'package:todo_app/utils/todo.dart';
 import 'package:todo_app/widgets/todo_tile.dart';
@@ -73,6 +74,18 @@ class _HomePageState extends State<HomePage> {
     saveTodos();
   }
 
+  // Function to update the title of the item
+  void _updateTodoText(ToDo updatedTodo) {
+    setState(() {
+      final index = todosList.indexWhere((todo) => todo.id == updatedTodo.id);
+      if (index != -1) {
+        todosList[index].todoText = updatedTodo.todoText;
+      }
+      foundToDo = List.from(todosList);
+    });
+    saveTodos();
+  }
+
   // Function to delete a todo item
   void _deleteItem(String id) {
     setState(() {
@@ -130,50 +143,47 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
+
+      // App Bar
       appBar: AppBar(
         backgroundColor: backgroundColor,
         scrolledUnderElevation: 0,
         title: const Text(
           'To Do List',
-          style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.w600,
+            color: textColor,
+          ),
         ),
         centerTitle: false,
       ),
+
+      // Body
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Search Bar
           Padding(
             padding: const EdgeInsets.all(20.0),
-            child: Container(
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: floatingButton,
-                    spreadRadius: 1,
-                    blurRadius: 5,
-                    offset: Offset(0, 3),
-                  ),
-                ],
+            child: TextField(
+              onChanged: (value) => runFilter(value),
+              style: TextStyle(
+                color: textColor,
+                fontSize: 24,
+                fontWeight: FontWeight.w600,
               ),
-              height: 60,
-              child: TextField(
-                onChanged: (value) => runFilter(value),
-                style: TextStyle(
-                  color: Colors.grey[800],
-                  fontSize: 22,
-                  fontWeight: FontWeight.w600,
-                ),
-                maxLines: 1,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: filledColor,
-                  hintText: 'Search',
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: Colors.grey[600],
-                    size: 30,
-                  ),
+              maxLines: 1,
+              enableSuggestions: false,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: filledColor,
+                hintText: 'Search item...',
+                hintStyle: TextStyle(fontSize: 24, color: hintColor),
+                prefixIcon: Icon(
+                  Icons.search,
+                  color: Colors.grey[600],
+                  size: 30,
                 ),
               ),
             ),
@@ -184,13 +194,17 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.only(left: 24.0),
             child: Text(
               'To Do Items',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: textColor,
+              ),
               textAlign: TextAlign.start,
             ),
           ),
 
           // Spacer
-          SizedBox(height: 10),
+          const SizedBox(height: 24),
 
           // List of To Do Items
           Expanded(
@@ -202,6 +216,7 @@ class _HomePageState extends State<HomePage> {
                   todo: todoo,
                   onToDoChanged: _handleTodoChange,
                   onDeleteItem: _deleteItem,
+                  onTitleChanged: _updateTodoText,
                 );
               },
             ),
@@ -209,35 +224,27 @@ class _HomePageState extends State<HomePage> {
 
           // Add New To Do Item Row
           Padding(
-            padding: const EdgeInsets.only(bottom: 10.0, left: 8.0, right: 8.0),
+            padding: const EdgeInsets.only(bottom: 16.0, left: 8.0, right: 8.0),
             child: Row(
               children: [
                 Expanded(
                   // TextField for adding new tasks
                   child: Container(
                     margin: EdgeInsets.only(left: 7, right: 0),
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: floatingButton,
-                          spreadRadius: 4,
-                          blurRadius: 5,
-                          offset: Offset(0, 3),
-                        ),
-                      ],
-                    ),
                     child: TextField(
                       controller: todoController,
                       style: TextStyle(
-                        color: Colors.grey[800],
+                        color: textColor,
                         fontSize: 22,
                         fontWeight: FontWeight.w600,
                       ),
                       maxLines: 1,
+                      enableSuggestions: false,
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: filledColor,
                         hintText: 'Add a new task',
+                        hintStyle: TextStyle(fontSize: 21, color: hintColor),
                         border: OutlineInputBorder(),
                         contentPadding: EdgeInsets.symmetric(horizontal: 18.0),
                       ),
@@ -246,7 +253,7 @@ class _HomePageState extends State<HomePage> {
                 ),
 
                 // Spacer between TextField and Floating Action Button
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
 
                 // Floating Action Button
                 Container(
@@ -255,19 +262,18 @@ class _HomePageState extends State<HomePage> {
                   decoration: BoxDecoration(
                     color: floatingButton,
                     borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey[400]!,
-                        spreadRadius: 4,
-                        blurRadius: 5,
-                        offset: Offset(0, 3),
-                      ),
-                    ],
                   ),
                   child: IconButton(
                     icon: Icon(Icons.add, color: Colors.black, size: 30),
                     onPressed: () {
-                      addItem(todoController.text);
+                      if (todoController.text.isNotEmpty) {
+                        addItem(todoController.text);
+                      } else {
+                        Fluttertoast.showToast(
+                          msg: 'Enter a task first',
+                          toastLength: Toast.LENGTH_SHORT,
+                        );
+                      }
                     },
                   ),
                 ),

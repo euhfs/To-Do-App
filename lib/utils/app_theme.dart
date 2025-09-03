@@ -8,6 +8,8 @@ class AppTheme {
         selectionColor: Colors.grey,
         selectionHandleColor: Colors.blue,
       ),
+
+      // Text Field
       inputDecorationTheme: InputDecorationTheme(
         hintStyle: TextStyle(
           color: Colors.grey[600],
@@ -15,14 +17,16 @@ class AppTheme {
           fontWeight: FontWeight.w600,
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Colors.blue, width: 2.5),
+          borderRadius: BorderRadius.circular(18),
+          borderSide: BorderSide.none,
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Colors.grey[400]!, width: 2.5),
+          borderRadius: BorderRadius.circular(18),
+          borderSide: BorderSide.none,
         ),
       ),
+
+      splashFactory: NoSplash.splashFactory
     );
   }
 }
