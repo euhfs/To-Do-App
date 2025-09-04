@@ -15,6 +15,7 @@ A Simple to use, privacy focused ToDo App.
 - **Edit ToDo Item**: Update the title of an existing task.
 - **Delete ToDo Item**: Remove a task from your list permanently.
 - **Search ToDo item**: Find tasks by typing keywords or phrases.
+- **Modern UI**: Clean, modern design with a icy blue color scheme.
 
 ## Installation
 
